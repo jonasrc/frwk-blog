@@ -2,6 +2,8 @@ package com.frwk.jonasrc.techtest.service.serviceImpl;
 
 import com.frwk.jonasrc.techtest.exception.EmailExistsException;
 import com.frwk.jonasrc.techtest.exception.EmptyContentException;
+import com.frwk.jonasrc.techtest.exception.PostNotFoundException;
+import com.frwk.jonasrc.techtest.exception.UserNotFoundException;
 import com.frwk.jonasrc.techtest.model.Post;
 import com.frwk.jonasrc.techtest.model.User;
 import com.frwk.jonasrc.techtest.repository.PostRepository;
@@ -27,7 +29,11 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post findById(long id) {
-        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
+        Post post = repository.findById(id).orElse(null);
+        if(post == null) {
+            throw new PostNotFoundException(id);
+        }
+        return post;
     }
 
     @Override

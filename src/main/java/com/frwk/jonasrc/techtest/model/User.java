@@ -11,7 +11,8 @@ import java.util.List;
 @Table(name = "app_user")
 public class User implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "app_user_seq_gen")
+    @SequenceGenerator(name = "app_user_seq_gen", sequenceName = "app_user_id_seq")
     private Long id;
 
     @NotNull
@@ -30,6 +31,13 @@ public class User implements Serializable {
             orphanRemoval = true
     )
     private List<Post> posts = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "commentUser",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Comment> comments = new ArrayList<>();
 
     public User() {
         this.name = "Test";
@@ -77,13 +85,21 @@ public class User implements Serializable {
         this.posts = posts;
     }
 
-    public void addComment(Post post) {
+    public void addPost(Post post) {
         posts.add(post);
         post.setUser(this);
     }
 
-    public void removeComment(Post post) {
+    public void removePost(Post post) {
         posts.remove(post);
-        post.setUser(this);
+    }
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
+        comment.setCommentUser(this);
+    }
+
+    public void removeComment(Comment comment) {
+        comments.remove(comment);
     }
 }

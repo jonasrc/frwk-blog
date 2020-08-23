@@ -21,6 +21,11 @@ public class RequestExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
+    @ExceptionHandler({ EmptyContentException.class })
+    public ResponseEntity<Object> emptyContentError(Exception ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
     @ExceptionHandler({ ConstraintViolationException.class })
     public ResponseEntity<Object> updateConstraintError(Exception ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
