@@ -25,11 +25,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] AUTH_LIST = {
         "/",
-        "/swagger-ui.html",
         "/users",
         "/users/{id}",
-        "/swagger-ui",
-        "/swagger-ui/index.html"
+        "/swagger-ui/",
+        "/swagger-ui/index.html",
+        "/swagger-ui.html",
+        "/swagger-ui/**",
+        "/v2/api-docs",
+        "/v3/api-docs",
+        "/swagger-resources",
+        "/swagger-resources/**",
+        "/configuration/ui",
+        "/configuration/security",
+        "/configuration/**",
+        "/webjars/**",
+    };
+
+    private static final String[] IGNORE_LIST = {
+        "/swagger-ui/",
+        "/swagger-ui/index.html",
+        "/swagger-ui.html",
+        "/swagger-ui/**",
+        "/v2/api-docs",
+        "/v3/api-docs",
+        "/swagger-resources",
+        "/swagger-resources/**",
+        "/configuration/ui",
+        "/configuration/security",
+        "/configuration/**",
+        "/webjars/**",
+        "/bootstrap/**"
     };
 
     @Override
@@ -49,7 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception{
-        web.ignoring().antMatchers("/bootstrap/**");
+        web.ignoring().antMatchers(IGNORE_LIST);
 //        web.ignoring().antMatchers("/bootstrap/**", "/style/**");
     }
 }

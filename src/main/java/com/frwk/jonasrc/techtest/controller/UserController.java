@@ -4,6 +4,7 @@ import com.frwk.jonasrc.techtest.dto.UserDTO;
 import com.frwk.jonasrc.techtest.exception.EmailExistsException;
 import com.frwk.jonasrc.techtest.model.User;
 import com.frwk.jonasrc.techtest.service.UserService;
+import io.swagger.annotations.ApiParam;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,9 @@ public class UserController {
 
     @PostMapping("/users")
     @ApiOperation(value = "Cadastro de novos usuários do blog")
-    public ResponseEntity<UserDTO> create(@RequestBody UserDTO userDTO) throws EmailExistsException {
+    public ResponseEntity<UserDTO> create(
+            @ApiParam(value = "Usuário a ser criado", required = true)
+            @RequestBody UserDTO userDTO) throws EmailExistsException {
         User newUser = userService.create(userDTO);
         UserDTO newUserDTO = convertToDTO(newUser);
         return ResponseEntity.created(URI.create(newUserDTO.getId().toString())).body(newUserDTO);
