@@ -1,13 +1,11 @@
 package com.frwk.jonasrc.techtest.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "app_user")
@@ -25,6 +23,13 @@ public class User implements Serializable {
 
     @NotNull
     private String password;
+
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Post> posts = new ArrayList<>();
 
     public User() {
         this.name = "Test";
@@ -60,5 +65,25 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    public String getPassword() { return password; }
+
     public void setPassword(String password) { this.password = password; }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    public void addComment(Post post) {
+        posts.add(post);
+        post.setUser(this);
+    }
+
+    public void removeComment(Post post) {
+        posts.remove(post);
+        post.setUser(this);
+    }
 }

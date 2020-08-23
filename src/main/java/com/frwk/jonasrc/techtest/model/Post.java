@@ -10,7 +10,8 @@ import java.time.LocalDate;
 @Table(name = "post")
 public class Post {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "post_seq_gen")
+    @SequenceGenerator(name = "post_seq_gen", sequenceName = "post_id_seq")
     private Long id;
 
     @NotBlank
@@ -18,7 +19,41 @@ public class Post {
     private String content;
 
     @NotBlank
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss", locale = "UTC-03")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate creationDate;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

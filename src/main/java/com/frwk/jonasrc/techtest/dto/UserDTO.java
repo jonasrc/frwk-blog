@@ -2,6 +2,7 @@ package com.frwk.jonasrc.techtest.dto;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class UserDTO {
     private Long id;
@@ -11,6 +12,8 @@ public class UserDTO {
     private String email;
 
     private String password;
+
+    private List<PostDTO> posts;
 
     public Long getId() {
         return id;

@@ -2,6 +2,7 @@ package com.frwk.jonasrc.techtest.service.serviceImpl;
 
 import com.frwk.jonasrc.techtest.dto.UserDTO;
 import com.frwk.jonasrc.techtest.exception.EmailExistsException;
+import com.frwk.jonasrc.techtest.exception.UserNotFoundException;
 import com.frwk.jonasrc.techtest.model.User;
 import com.frwk.jonasrc.techtest.repository.UserRepository;
 import com.frwk.jonasrc.techtest.service.UserService;
@@ -27,20 +28,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(long id) {
-        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
+        User user = repository.findById(id).orElse(null);
+        if(user == null) {
+            throw new UserNotFoundException(id);
+        }
+        return user;
     }
 
     @Override
-    public User create(UserDTO userDTO) throws EmailExistsException {
-        if (emailExists(userDTO.getEmail())) {
-            throw new EmailExistsException(userDTO.getEmail());
+    public User create(User user) throws EmailExistsException {
+        if (emailExists(user.getEmail())) {
+            throw new EmailExistsException(user.getEmail());
         }
 
-        User user = new User();
-        user.setName(userDTO.getName());
-        user.setEmail(userDTO.getEmail());
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return repository.save(user);
     }
 

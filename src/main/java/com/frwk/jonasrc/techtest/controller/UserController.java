@@ -19,7 +19,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@Api(tags = "Usuários", value = "uookController", description="Cadastro e listagem de usuários do blog")
+@Api(tags = "Usuários", value = "userController", description="Cadastro e listagem de usuários do blog")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -35,12 +35,20 @@ public class UserController {
         return ResponseEntity.ok().body(userDTOList);
     }
 
+    @GetMapping("/users/{id}")
+    @ApiOperation(value = "Buscar lista completa de usuários do blog")
+    public ResponseEntity<UserDTO> findById(@PathVariable Long id) {
+        User user = userService.findById(id);
+        UserDTO userDTO = convertToDTO(user);
+        return ResponseEntity.ok().body(userDTO);
+    }
+
     @PostMapping("/users")
     @ApiOperation(value = "Cadastro de novos usuários do blog")
     public ResponseEntity<UserDTO> create(
             @ApiParam(value = "Usuário a ser criado", required = true)
             @RequestBody UserDTO userDTO) throws EmailExistsException {
-        User newUser = userService.create(userDTO);
+        User newUser = userService.create(convertToEntity(userDTO));
         UserDTO newUserDTO = convertToDTO(newUser);
         return ResponseEntity.created(URI.create(newUserDTO.getId().toString())).body(newUserDTO);
     }

@@ -3,7 +3,6 @@ package com.frwk.jonasrc.techtest;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -31,8 +30,8 @@ public class AppConfiguration {
 
     private ApiInfo apiEndPointsInfo() {
 
-        return new ApiInfoBuilder().title("Gestão de usuários - blog")
-                .description("REST API escrita em Java 8 / Spring para gestão de usuários de um blog"
+        return new ApiInfoBuilder().title("API para consumo de dados de um blog")
+                .description("REST API escrita em Java 8 / Spring para gestão de usuários, postagens, comentários e álbuns de fotos em um blog"
                         + "\n\nAPI implementada como parte do desafio técnico da Framework.")
                 .contact(new Contact("Jonas Castanheira", "https://github.com/jonasrc", "jonasrcastanheira@gmail.com"))
                 .license("Apache 2.0")
