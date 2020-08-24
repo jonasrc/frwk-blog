@@ -39,6 +39,13 @@ public class User implements Serializable {
     )
     private List<Comment> comments = new ArrayList<>();
 
+    @OneToMany(
+            mappedBy = "albumUser",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Album> albums = new ArrayList<>();
+
     public User() {
         this.name = "Test";
         this.email = "test@domain.com";
@@ -101,5 +108,21 @@ public class User implements Serializable {
 
     public void removeComment(Comment comment) {
         comments.remove(comment);
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public List<Album> getAlbums() {
+        return albums;
+    }
+
+    public void setAlbums(List<Album> albums) {
+        this.albums = albums;
     }
 }

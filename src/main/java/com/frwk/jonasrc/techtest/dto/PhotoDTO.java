@@ -1,13 +1,13 @@
 package com.frwk.jonasrc.techtest.dto;
 
-public class CommentDTO {
+public class PhotoDTO {
     private Long id;
 
-    private String content;
+    private String path;
 
     private String creationDate;
 
-    private UserDTO user;
+    private AlbumDTO album;
 
     public Long getId() {
         return id;
@@ -17,12 +17,12 @@ public class CommentDTO {
         this.id = id;
     }
 
-    public String getContent() {
-        return content;
+    public String getPath() {
+        return path;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public String getCreationDate() {
@@ -33,11 +33,11 @@ public class CommentDTO {
         this.creationDate = creationDate;
     }
 
-    public UserDTO getUser() {
-        return user;
+    public AlbumDTO getAlbum() {
+        return album;
     }
 
-    public void setUser(UserDTO user) {
-        this.user = user;
+    public void setAlbum(AlbumDTO albumDTO) {
+        this.album = albumDTO;
     }
 }

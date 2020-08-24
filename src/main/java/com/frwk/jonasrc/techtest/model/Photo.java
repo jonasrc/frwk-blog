@@ -5,32 +5,23 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Table(name = "album")
-public class Album {
+@Table(name = "photo")
+public class Photo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotBlank
-    private String title;
+    private String path;
 
     @NotBlank
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss", locale = "UTC-03")
     private LocalDate creationDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User albumUser;
-
-    @OneToMany(
-            mappedBy = "album",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<Photo> photos = new ArrayList<>();
+    private Album album;
 
     public Long getId() {
         return id;
@@ -40,12 +31,12 @@ public class Album {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getPath() {
+        return path;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public LocalDate getCreationDate() {
@@ -56,19 +47,11 @@ public class Album {
         this.creationDate = creationDate;
     }
 
-    public User getAlbumUser() {
-        return albumUser;
+    public Album getAlbum() {
+        return album;
     }
 
-    public void setAlbumUser(User albumUser) {
-        this.albumUser = albumUser;
-    }
-
-    public List<Photo> getPhotos() {
-        return photos;
-    }
-
-    public void setPhotos(List<Photo> photos) {
-        this.photos = photos;
+    public void setAlbum(Album album) {
+        this.album = album;
     }
 }

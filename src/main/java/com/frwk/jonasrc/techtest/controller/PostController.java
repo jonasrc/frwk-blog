@@ -97,8 +97,6 @@ public class PostController {
         Comment comment = modelMapper.map(commentDTO, Comment.class);
         User user = userService.findById(commentDTO.getUser().getId());
         comment.setCommentUser(user);
-        Post post = postService.findById(commentDTO.getPost().getId());
-        comment.setCommentPost(post);
         return comment;
     }
 }

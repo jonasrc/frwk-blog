@@ -1,5 +1,7 @@
 package com.frwk.jonasrc.techtest.dto;
 
+import java.util.List;
+
 public class PostDTO {
     private Long id;
 
@@ -8,6 +10,8 @@ public class PostDTO {
     private String creationDate;
 
     private UserDTO user;
+
+    private List<CommentDTO> comments;
 
     public Long getId() {
         return id;
@@ -39,5 +43,13 @@ public class PostDTO {
 
     public void setUser(UserDTO user) {
         this.user = user;
+    }
+
+    public List<CommentDTO> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentDTO> comments) {
+        this.comments = comments;
     }
 }

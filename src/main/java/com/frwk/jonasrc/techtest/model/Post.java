@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "post")
@@ -24,6 +26,13 @@ public class Post {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    @OneToMany(
+            mappedBy = "commentPost",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Comment> comments = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -56,4 +65,8 @@ public class Post {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public List<Comment> getComments() { return comments; }
+
+    public void setComments(List<Comment> comments) { this.comments = comments; }
 }
